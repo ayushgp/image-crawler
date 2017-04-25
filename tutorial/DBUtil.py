@@ -29,6 +29,21 @@ class DBUtil(object):
         finally:
             self.connection.close()
 
+    def check_if_image_exists(self, web_id, img_id):
+        self.get_connection()
+
+        try:
+            with self.connection.cursor() as cursor:
+                img_search_stmt = "SELECT img_id FROM images WHERE img_id=%s"
+                cursor.execute(img_search_stmt, img_id)
+                if cursor.fetchone() is None:
+                    return False
+                else:
+                    return True
+
+        finally:
+            self.connection.close()
+
     def get_connection(self):
         self.connection = pymysql.connect(host='localhost',
                                           user='root',
