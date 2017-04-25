@@ -12,16 +12,9 @@ CREATE TABLE images(
     PRIMARY KEY(img_id)
 );
 
-CREATE TABLE tags(
-    tag_id          INT(10) NOT NULL,
-    tag_name    VARCHAR(30) NOT NULL UNIQUE,
-    PRIMARY KEY(id)
-);
-
 CREATE TABLE imgtags(
     img_id      INT(20) NOT NULL,
     tag_id      INT(10) NOT NULL,
     weight      INT(10),
-    FOREIGN KEY(img_id) REFERENCES images(img_id),
-    FOREIGN KEY(tag_id) REFERENCES tags(tag_id)
+    FOREIGN KEY(img_id) REFERENCES images(img_id)
 );
