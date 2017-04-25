@@ -2,7 +2,7 @@ CREATE TABLE websites(
     web_id      INT(5) NOT NULL,
     webname VARCHAR(20) NOT NULL,
     url     VARCHAR(100) NOT NULL,
-    PRIMARY KEY(id)
+    PRIMARY KEY(web_id)
 );
 
 CREATE TABLE images(
