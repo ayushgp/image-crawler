@@ -10,11 +10,11 @@ class DBUtil(object):
 
         try:
             with self.connection.cursor() as cursor:
-                img_insert_stmt = "INSERT INTO `images` (`img_id`, `url`, `page_url`) VALUES(%s, %s, %s)"
+                img_insert_stmt = "INSERT INTO `images` (`img_id`, `url`, `page_url`, `web_id`) VALUES(%s, %s, %s, %s)"
                 img_tags_rel_stmt = "INSERT INTO `imgtags`(`img_id`, `tag_id`) VALUES" + \
                                     ",".join("(%s, %s)" for tag in tags)
 
-                cursor.execute(img_insert_stmt, (img_id, img_url, page_url))
+                cursor.execute(img_insert_stmt, (img_id, img_url, page_url, web_id))
 
                 # Construct the insert query for tagging
                 num_tags = len(tags)
