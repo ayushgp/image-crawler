@@ -14,7 +14,7 @@ CREATE TABLE images(
 
 CREATE TABLE imgtags(
     img_id      INT(20) NOT NULL,
-    tag_id      INT(10) NOT NULL,
+    tag_id      VARCHAR(30) NOT NULL,
     weight      INT(10),
     FOREIGN KEY(img_id) REFERENCES images(img_id)
 );
