@@ -6,10 +6,12 @@ CREATE TABLE websites(
 );
 
 CREATE TABLE images(
-    img_id          INT(20) NOT NULL,
+    img_id      INT(20) NOT NULL,
     url         VARCHAR(2083) NOT NULL,
     page_url    VARCHAR(2083) NOT NULL,
-    PRIMARY KEY(img_id)
+    web_id      INT(5) NOT NULL,
+    PRIMARY KEY(img_id),
+    FOREIGN KEY(web_id) REFERENCES websites(web_id)
 );
 
 CREATE TABLE imgtags(
