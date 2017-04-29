@@ -1,6 +1,8 @@
 import re
 
 import scrapy
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
 from scrapy.linkextractor import LinkExtractor
 from scrapy.selector import Selector
 
@@ -29,10 +31,15 @@ class PexelsScraper(scrapy.Spider):
         if response.status == 200:
             body = Selector(text=response.body)
             images = body.css('img.image-section__image').extract()
+
+            stemmer = PorterStemmer()
+
             for image in images:
                 img_url = PexelsScraper.src_extractor.findall(image)[0]
                 img_id = self.get_image_id(response.url)
-                tags = [tag.replace(',', '') for tag in PexelsScraper.tags_extractor.findall(image)[0].split(' ')]
+                extracted_tags = [tag.replace(',', '').lower() for tag in PexelsScraper.tags_extractor.findall(image)[0].split(' ')]
+
+                tags = [stemmer.stem(word) for word in extracted_tags if word not in stopwords.words('english')]
 
                 PexelsScraper.db_util.create_index(img_id,
                                                    1,
