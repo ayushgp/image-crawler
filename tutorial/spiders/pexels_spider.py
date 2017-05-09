@@ -11,6 +11,7 @@ from ..DBUtil import DBUtil
 
 class PexelsScraper(scrapy.Spider):
     name = "pexels"
+    WEBSITE_ID = 1
     start_urls = ["https://www.pexels.com/"]
     base_url = "https://www.pexels.com/"
 
@@ -42,7 +43,7 @@ class PexelsScraper(scrapy.Spider):
                 tags = [stemmer.stem(word) for word in extracted_tags if word not in stopwords.words('english')]
 
                 PexelsScraper.db_util.create_index(img_id,
-                                                   1,
+                                                   PexelsScraper.WEBSITE_ID,
                                                    img_url,
                                                    response.url,
                                                    tags)
@@ -58,7 +59,7 @@ class PexelsScraper(scrapy.Spider):
     Works based off of id for this particular website. 
     """
     def check_if_extracted(self, img_url):
-        return not PexelsScraper.db_util.check_if_image_exists(1, self.get_image_id(img_url))
+        return not PexelsScraper.db_util.check_if_image_exists(PexelsScraper.WEBSITE_ID, self.get_image_id(img_url))
 
     def get_image_id(self, url):
         # Image urls are of type: https://www.pexels.com/photo/asphalt-blur-clouds-dawn-392010/
